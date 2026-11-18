@@ -1,4 +1,6 @@
-<h1>Créneaux</h1>
+<h1>Échanges de compétences</h1>
+
+<h2>Créneaux</h2>
 {% if schedule_list %}
     <ul>
     {% for schedule in schedule_list %}
@@ -6,5 +8,16 @@
     {% endfor %}
     </ul>
 {% else %}
-    <p>No schedules are available.</p>
+    <p>Aucun créneau disponible.</p>
 {% endif %}
+<h2>Compétences</h2>
+{% if ability_list %}
+    <ul>
+    {% for ability in ability_list %}
+        <li><a href="{% url 'show_ability' ability.id %}">{{ ability }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucune compétence disponible.</p>
+{% endif %}
+<a href="{% url 'create_ability' %}">Créer une compétence</a>
