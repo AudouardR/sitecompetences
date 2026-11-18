@@ -1,23 +1,38 @@
-<h1>Échanges de compétences</h1>
+{% extends "base.html" %}
 
-<h2>Créneaux</h2>
-{% if schedule_list %}
-    <ul>
-    {% for schedule in schedule_list %}
-        <li><a href="{% url 'show_schedule' schedule.id %}">{{ schedule }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Aucun créneau disponible.</p>
-{% endif %}
-<h2>Compétences</h2>
-{% if ability_list %}
-    <ul>
-    {% for ability in ability_list %}
-        <li><a href="{% url 'show_ability' ability.id %}">{{ ability }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Aucune compétence disponible.</p>
-{% endif %}
-<a href="{% url 'create_ability' %}">Créer une compétence</a>
+{% block title %}Échanges de compétences{% endblock %}
+
+{% block header %}
+    <h1>Échanges de compétences</h1>
+{% endblock %}
+
+{% block main %}
+
+    <h2>Créneaux</h2>
+    {% if schedule_list %}
+        <ul>
+        {% for schedule in schedule_list %}
+            <li><a href="{% url 'show_schedule' schedule.id %}">{{ schedule }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun créneau disponible.</p>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'create_schedule' %}">Proposer un créneau</a>
+    {% endif %}
+    <h2>Compétences</h2>
+    {% if ability_list %}
+        <ul>
+        {% for ability in ability_list %}
+            <li><a href="{% url 'show_ability' ability.id %}">{{ ability }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucune compétence disponible.</p>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'create_ability' %}">Créer une compétence</a>
+    {% endif %}
+
+{% endblock %}

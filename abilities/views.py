@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.http import require_GET, require_POST
 
-from .forms import AbilityForm
+from .forms import AbilityForm, ScheduleForm
 from .models import Schedule, Ability
 
 
@@ -23,29 +23,27 @@ def show_ability(request, ability_id):
 
 @require_GET
 def create_ability(request):
-    form = AbilityForm()
-    return render(request, "abilities/ability/create.html", {"form": form})
+    if request.user.is_authenticated:
+        form = AbilityForm()
+        return render(request, "abilities/ability/create.html", {"form": form})
+    else:
+        return HttpResponseRedirect(reverse("index"))
 
 @require_POST
 def save_ability(request):
-    # if this is a POST request we need to process the form data
-    if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = AbilityForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            Ability.objects.create(label=form.cleaned_data["label"],
-                                    activity=form.cleaned_data["activity"])
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            return HttpResponseRedirect(reverse("index"))
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            form = AbilityForm(request.POST)
+            if form.is_valid():
+                Ability.objects.create(label=form.cleaned_data["label"],
+                                        activity=form.cleaned_data["activity"])
+                return HttpResponseRedirect(reverse("index"))
+        else:
+            form = AbilityForm()
 
-    # if a GET (or any other method) we'll create a blank form
+        return render(request, "abilities/ability/create.html", {"form": form})
     else:
-        form = AbilityForm()
-
-    return render(request, "abilities/ability/create.html", {"form": form})
+        return HttpResponseRedirect(reverse("index"))
 
 @require_GET
 def edit_ability(request, ability_id):
@@ -68,11 +66,29 @@ def show_schedule(request, schedule_id):
 
 @require_GET
 def create_schedule(request):
-    return HttpResponse("You're creating a new schedule.")
+    if request.user.is_authenticated:
+        form = ScheduleForm()
+        return render(request, "abilities/schedule/create.html", {"form": form})
+    else:
+        return HttpResponseRedirect(reverse("index"))
 
 @require_POST
 def save_schedule(request):
-    return HttpResponse("You're saving a new schedule.")
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            form = ScheduleForm(request.POST)
+            if form.is_valid():
+                Schedule.objects.create(ability=form.cleaned_data["ability"],
+                                       client=request.user, # Demandeur = utilisateur connecté
+                                       accepted=0,
+                                       date=form.cleaned_data["date"])
+                return HttpResponseRedirect(reverse("index"))
+        else:
+            form = ScheduleForm()
+
+        return render(request, "abilities/schedule/create.html", {"form": form})
+    else:
+        return HttpResponseRedirect(reverse("index"))
 
 @require_GET
 def edit_schedule(request, schedule_id):
