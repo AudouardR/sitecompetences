@@ -1,0 +1,21 @@
+<h1>Créneau n°{{ schedule.id }}</h1>
+<ul>
+    <li>
+        Date : {{ schedule.date }}
+    </li>
+    <li>
+        Demandeur : {{ schedule.client }}
+    </li>
+
+    <li>
+        Candidat : {% if schedule.applicant %}{{ schedule.applicant }}{% else %}Aucun{% endif %}
+    </li>
+
+    <li>
+        Créneau accepté : {% if schedule.accepted >= 1 %}Oui{% else %}Non{% endif %}
+    </li>
+    <li>
+        Activité : {{ schedule.ability.activity }}
+        (<a href="{% url 'show_ability' schedule.ability.id %}">{{ schedule.ability.label }}</a>)
+    </li>
+</ul>

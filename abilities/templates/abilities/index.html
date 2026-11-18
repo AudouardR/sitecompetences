@@ -1,0 +1,10 @@
+<h1>Créneaux</h1>
+{% if schedule_list %}
+    <ul>
+    {% for schedule in schedule_list %}
+        <li><a href="{% url 'show_schedule' schedule.id %}">{{ schedule }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No schedules are available.</p>
+{% endif %}

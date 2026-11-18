@@ -19,7 +19,7 @@ class Schedule(models.Model):
     date = models.DateField()
 
     def __str__(self):
-        return str(self.date) + ", " + str(self.ability) + ", " + str(self.client)
+        return str(self.date) + " : " + str(self.ability.activity) + ", proposé par " + str(self.client)
 
     def is_in_the_past(self):
         return self.date < timezone.localdate()
