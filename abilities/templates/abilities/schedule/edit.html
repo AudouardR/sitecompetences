@@ -1,0 +1,6 @@
+<h1>Modifier un créneau</h1>
+<form action="{% url 'update_schedule' schedule.id %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>

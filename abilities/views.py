@@ -92,12 +92,39 @@ def save_schedule(request):
 
 @require_GET
 def edit_schedule(request, schedule_id):
-    return HttpResponse("You're editing schedule %s." % schedule_id)
+    if request.user.is_authenticated:
+        schedule = get_object_or_404(Schedule, pk=schedule_id)
+        form = ScheduleForm(initial={"ability": schedule.ability, "date": schedule.date})
+        return render(request, "abilities/schedule/edit.html", {"form": form, "schedule": schedule})
+    else:
+        return HttpResponseRedirect(reverse("index"))
 
 @require_POST
 def update_schedule(request, schedule_id):
-    return HttpResponse("You're updating schedule %s." % schedule_id)
+    schedule = get_object_or_404(Schedule, pk=schedule_id)
+
+    if request.user.is_authenticated and (request.user.is_superuser or request.user == schedule.client):
+
+        if request.method == "POST":
+            form = ScheduleForm(request.POST)
+            if form.is_valid():
+                schedule.ability=form.cleaned_data["ability"]
+                schedule.date=form.cleaned_data["date"]
+                schedule.save()
+                return HttpResponseRedirect(reverse("index"))
+        else:
+            form = ScheduleForm(initial={"ability": schedule.ability, "date": schedule.date})
+
+        return render(request, "abilities/schedule/edit.html", {"form": form, "schedule": schedule})
+    else:
+        return HttpResponseRedirect(reverse("index"))
 
 @require_POST
 def delete_schedule(request, schedule_id):
-    return HttpResponse("You're deleting schedule %s." % schedule_id)
+    schedule = get_object_or_404(Schedule, pk=schedule_id)
+    if request.user.is_authenticated and (request.user.is_superuser or request.user == schedule.client):
+
+        if request.method == "POST":
+            schedule.delete()
+
+    return HttpResponseRedirect(reverse("index"))

@@ -8,6 +8,10 @@
     </li>
 
     <li>
+        Adresse courriel du demandeur : {{ schedule.client.email }}
+    </li>
+
+    <li>
         Candidat : {% if schedule.applicant %}{{ schedule.applicant }}{% else %}Aucun{% endif %}
     </li>
 
@@ -19,4 +23,13 @@
         (<a href="{% url 'show_ability' schedule.ability.id %}">{{ schedule.ability.label }}</a>)
     </li>
 </ul>
+{% if user.is_authenticated %}
+    {% if user.is_superuser or user == schedule.client %}
+        <a href="{% url 'edit_schedule' schedule.id %}">Modifier</a>
+        <form action="{% url 'delete_schedule' schedule.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" onclick="confirm('Voulez-vous vraiment supprimer ce créneau ?')">Supprimer</button>
+        </form>
+    {% endif %}
+{% endif %}
 <a href="javascript:history.back()">Retour</a>
