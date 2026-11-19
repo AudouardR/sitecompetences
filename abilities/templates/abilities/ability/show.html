@@ -1,3 +1,15 @@
 <h1>{{ ability.label }}</h1>
 <p>Activité : {{ ability.activity }}</p>
+{% if user.is_authenticated %}
+    {% if user.is_superuser %}
+        <a href="{% url 'edit_ability' ability.id %}">Modifier</a>
+        <form action="{% url 'delete_ability' ability.id %}"
+              onsubmit="return confirm('Voulez-vous vraiment supprimer cette compétence ?')"
+              method="post"
+        >
+            {% csrf_token %}
+            <button type="submit">Supprimer</button>
+        </form>
+    {% endif %}
+{% endif %}
 <a href="javascript:history.back()">Retour</a>

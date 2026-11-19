@@ -47,15 +47,42 @@ def save_ability(request):
 
 @require_GET
 def edit_ability(request, ability_id):
-    return HttpResponse("You're editing ability %s." % ability_id)
+    if request.user.is_authenticated:
+        ability = get_object_or_404(Ability, pk=ability_id)
+        form = AbilityForm(initial={"label": ability.label, "activity": ability.activity})
+        return render(request, "abilities/ability/edit.html", {"form": form, "ability": ability})
+    else:
+        return HttpResponseRedirect(reverse("index"))
 
 @require_POST
 def update_ability(request, ability_id):
-    return HttpResponse("You're updating ability %s." % ability_id)
+    ability = get_object_or_404(Ability, pk=ability_id)
+
+    if request.user.is_authenticated and request.user.is_superuser:
+
+        if request.method == "POST":
+            form = AbilityForm(request.POST)
+            if form.is_valid():
+                ability.label = form.cleaned_data["label"]
+                ability.activity = form.cleaned_data["activity"]
+                ability.save()
+                return HttpResponseRedirect(reverse("index"))
+        else:
+            form = ScheduleForm(initial={"label": ability.label, "activity": ability.activity})
+
+        return render(request, "abilities/ability/edit.html", {"form": form, "ability": ability})
+    else:
+        return HttpResponseRedirect(reverse("index"))
 
 @require_POST
 def delete_ability(request, ability_id):
-    return HttpResponse("You're deleting ability %s." % ability_id)
+    ability = get_object_or_404(Ability, pk=ability_id)
+    if request.user.is_authenticated and request.user.is_superuser:
+
+        if request.method == "POST":
+            ability.delete()
+
+    return HttpResponseRedirect(reverse("index"))
 
 # Créneaux
 

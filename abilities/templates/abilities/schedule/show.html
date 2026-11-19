@@ -26,9 +26,12 @@
 {% if user.is_authenticated %}
     {% if user.is_superuser or user == schedule.client %}
         <a href="{% url 'edit_schedule' schedule.id %}">Modifier</a>
-        <form action="{% url 'delete_schedule' schedule.id %}" method="post">
+        <form action="{% url 'delete_schedule' schedule.id %}"
+              onsubmit="return confirm('Voulez-vous vraiment supprimer ce créneau ?')"
+              method="post"
+        >
             {% csrf_token %}
-            <button type="submit" onclick="confirm('Voulez-vous vraiment supprimer ce créneau ?')">Supprimer</button>
+            <button type="submit">Supprimer</button>
         </form>
     {% endif %}
 {% endif %}
