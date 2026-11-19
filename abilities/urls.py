@@ -6,6 +6,9 @@ urlpatterns = [
     # ex: /abilities/
     path("", views.index, name="index"),
 
+    # ex: /abilities/user/audouardr/
+    path('user/<str:username>/', views.profile_view, name='profile_view'),
+
     # ex: /abilities/ability/2/
     path("ability/<int:ability_id>/", views.show_ability, name="show_ability"),
     # ex: /abilities/ability/create/

@@ -10,3 +10,6 @@ class AbilityForm(forms.Form):
 class ScheduleForm(forms.Form):
     ability = forms.ModelChoiceField(label="Compétence", queryset=Ability.objects.all())
     date = forms.DateField(label="Date")
+
+class UserAbilitiesForm(forms.Form):
+    abilities = forms.MultipleChoiceField(label="Compétences", choices=Ability.objects.all())

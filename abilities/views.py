@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_GET, require_POST
 
 from .forms import AbilityForm, ScheduleForm
-from .models import Schedule, Ability
+from .models import Schedule, Ability, Profile
 
 
 @require_GET
@@ -13,6 +13,13 @@ def index(request):
     ability_list = Ability.objects.all()
     context = {"schedule_list": schedule_list, "ability_list": ability_list}
     return render(request, "abilities/index.html", context)
+
+# Profils
+
+@require_GET
+def profile_view(request, username):
+    profile = Profile.objects.get(user__username=username)
+    return render(request, 'abilities/profile.html', {'profile': profile})
 
 # Compétences
 

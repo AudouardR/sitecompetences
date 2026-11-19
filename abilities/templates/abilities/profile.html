@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}
+Échanges de compétences - Profil :
+{% if profile.user.last_name and profile.user.first_name %}
+{{ profile.user.first_name }} {{ profile.user.last_name }}
+{% else %}
+{{ profile.user.username }}
+{% endif %}
+{% endblock %}
+
+{% block header %}
+    {% if profile.user.last_name and profile.user.first_name %}
+        <h1>Profil : {{ profile.user.first_name }} {{ profile.user.last_name }}</h1>
+    {% else %}
+        <h1>Profil : {{ profile.user.username }}</h1>
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+    {% if profile.user.last_name and profile.user.first_name %}
+        <p>Nom d'utilisateur : {{ profile.user.username }}</p>
+    {% endif %}
+    <p>Adresse courriel : {{ profile.user.email }}</p>
+    <p>Compétences :</p>
+    {% if profile.abilities %}
+        <ul>
+            {% for ability in profile.abilities.all %}
+                <li><a href="{% url 'show_ability' ability.id %}">{{ ability.label }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucune compétence</p>
+    {% endif %}
+
+    <a href="javascript:history.back()">Retour</a>
+{% endblock %}

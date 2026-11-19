@@ -23,3 +23,11 @@ class Schedule(models.Model):
 
     def is_in_the_past(self):
         return self.date < timezone.localdate()
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    abilities = models.ManyToManyField(Ability, related_name='abilities_set', blank=True)
+    REQUIRED_FIELDS = ['email']
+
+    def __str__(self):
+        return self.user.username
