@@ -7,25 +7,78 @@
     <div>
         {% if user.is_authenticated %}
             <a href="{% url 'profile_view' user.username %}">Profil</a>
+            <form action="{% url 'logout' %}" method="post">
+              {% csrf_token %}
+              <button type="submit">Se déconnecter</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Se connecter</a>
         {% endif %}
     </div>
 {% endblock %}
 
 {% block main %}
 
-    <h2>Créneaux</h2>
-    {% if schedule_list %}
-        <ul>
-        {% for schedule in schedule_list %}
-            <li><a href="{% url 'show_schedule' schedule.id %}">{{ schedule }}</a></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>Aucun créneau disponible.</p>
+    {% if user.is_superuser or not user.is_authenticated %}
+
+        <h2>Créneaux</h2>
+        {% if schedule_list %}
+            <ul>
+            {% for schedule in schedule_list %}
+                <li><a href="{% url 'show_schedule' schedule.id %}">{{ schedule.date }}, {{ schedule.ability.activity }}
+                {% if user.is_authenticated %}proposé par {{ schedule.client.username }}{% endif %}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucun créneau disponible.</p>
+        {% endif %}
+
     {% endif %}
+
     {% if user.is_authenticated %}
+
+        <h2>Créneaux disponibles pour vous :</h2>
+        {% if proposed_schedule_list %}
+            <ul>
+            {% for schedule in proposed_schedule_list %}
+                <li><a href="{% url 'show_schedule' schedule.id %}">{{ schedule.date }}, {{ schedule.ability.activity }},
+                proposé par {{ schedule.client.username }}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucun créneau disponible.</p>
+        {% endif %}
+
+        <h2>Vos créneaux</h2>
+        {% if user_schedule_list %}
+            <ul>
+            {% for schedule in user_schedule_list %}
+                <li><a href="{% url 'show_schedule' schedule.id %}">{{ schedule.date }}, {{ schedule.ability.activity }}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucun créneau créé.</p>
+        {% endif %}
         <a href="{% url 'create_schedule' %}">Proposer un créneau</a>
+
     {% endif %}
+
+    {% if user.is_superuser %}
+
+        <h2>Créneaux obsolètes</h2>
+        {% if outdated_schedule_list %}
+            <ul>
+            {% for schedule in outdated_schedule_list %}
+                <li><a href="{% url 'show_schedule' schedule.id %}">{{ schedule.date }}, {{ schedule.ability.activity }}
+                proposé par {{ schedule.client.username }}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucun créneau obsolète.</p>
+        {% endif %}
+
+    {% endif %}
+
     <h2>Compétences</h2>
     {% if ability_list %}
         <ul>

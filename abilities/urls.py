@@ -1,4 +1,5 @@
-from django.urls import path
+from django.contrib import admin
+from django.urls import path, include
 
 from . import views
 
@@ -6,12 +7,15 @@ urlpatterns = [
     # ex: /abilities/
     path("", views.index, name="index"),
 
-    # ex: /abilities/user/audouardr/
-    path('user/<str:username>/', views.profile_view, name='profile_view'),
-    # ex: /abilities/user/audouardr/select-abilities
-    path('user/<str:username>/select-abilities', views.select_abilities, name='select_abilities'),
-    # ex: /abilities/user/audouardr/confirm-abilities
-    path('user/<str:username>/confirm-abilities', views.confirm_abilities, name='confirm_abilities'),
+    path("admin/", admin.site.urls),
+    path("accounts/", include("django.contrib.auth.urls")),
+
+    # ex: /abilities/accounts/audouardr/
+    path('accounts/<str:username>/', views.profile_view, name='profile_view'),
+    # ex: /abilities/accounts/audouardr/select-abilities
+    path('accounts/<str:username>/select-abilities', views.select_abilities, name='select_abilities'),
+    # ex: /abilities/accounts/audouardr/confirm-abilities
+    path('accounts/<str:username>/confirm-abilities', views.confirm_abilities, name='confirm_abilities'),
 
     # ex: /abilities/ability/2/
     path("ability/<int:ability_id>/", views.show_ability, name="show_ability"),

@@ -1,6 +1,7 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.utils import timezone
 from django.views.decorators.http import require_GET, require_POST
 
 from .forms import AbilityForm, ScheduleForm, UserAbilitiesForm
@@ -9,9 +10,28 @@ from .models import Schedule, Ability, Profile
 
 @require_GET
 def index(request):
-    schedule_list = Schedule.objects.all()
+    schedule_list = Schedule.objects.filter(date__gte=timezone.now()).order_by("date")
     ability_list = Ability.objects.all()
     context = {"schedule_list": schedule_list, "ability_list": ability_list}
+
+    if request.user.is_authenticated:
+        profile = Profile.objects.get(user__username=request.user.username)
+
+        user_ability_list = profile.abilities.all()
+        context["user_ability_list"] = user_ability_list
+
+        proposed_schedule_list = Schedule.objects.filter(accepted=False,
+                                                         ability__in=user_ability_list,
+                                                         date__gte=timezone.now()).order_by("date")
+        context["proposed_schedule_list"] = proposed_schedule_list
+
+        user_schedule_list = Schedule.objects.filter(client__username=request.user.username)
+        context["user_schedule_list"] = user_schedule_list
+
+        if request.user.is_superuser:
+            outdated_schedule_list = Schedule.objects.filter(date__lte=timezone.now()).order_by("date")
+            context["outdated_schedule_list"] = outdated_schedule_list
+
     return render(request, "abilities/index.html", context)
 
 # Profils
@@ -49,6 +69,10 @@ def confirm_abilities(request, username):
         return render(request, "abilities/user_abilities.html", {"form": form, 'profile': profile})
     else:
         return HttpResponseRedirect(reverse("index"))
+
+# Login
+
+
 
 # Compétences
 

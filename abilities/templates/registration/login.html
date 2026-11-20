@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Échanges de compétences - Connexion{% endblock %}
+
+{% block header %}
+    <h1>Connexion</h1>
+{% endblock %}
+
+{% block main %}
+<form method="post">
+  {% csrf_token %}
+  {{ form }}
+  <button type="submit">Se connecter</button>
+</form>
+{% endblock %}

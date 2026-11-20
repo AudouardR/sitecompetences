@@ -3,17 +3,19 @@
     <li>
         Date : {{ schedule.date }}
     </li>
-    <li>
-        Demandeur : {{ schedule.client }}
-    </li>
+    {% if user.is_authenticated %}
+        <li>
+            Demandeur : {{ schedule.client }}
+        </li>
 
-    <li>
-        Adresse courriel du demandeur : {{ schedule.client.email }}
-    </li>
+        <li>
+            Adresse courriel du demandeur : {{ schedule.client.email }}
+        </li>
 
-    <li>
-        Candidat : {% if schedule.applicant %}{{ schedule.applicant }}{% else %}Aucun{% endif %}
-    </li>
+        <li>
+            Candidat : {% if schedule.applicant %}{{ schedule.applicant }}{% else %}Aucun{% endif %}
+        </li>
+    {% endif %}
 
     <li>
         Créneau accepté : {% if schedule.accepted >= 1 %}Oui{% else %}Non{% endif %}

@@ -23,7 +23,7 @@
     {% endif %}
     <p>Adresse courriel : {{ profile.user.email }}</p>
     <p>Compétences :</p>
-    {% if profile.abilities %}
+    {% if profile.abilities.all %}
         <ul>
             {% for ability in profile.abilities.all %}
                 <li><a href="{% url 'show_ability' ability.id %}">{{ ability.label }}</a></li>
