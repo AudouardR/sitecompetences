@@ -1,0 +1,13 @@
+<h1>Compétences de
+{% if profile.user.last_name and profile.user.first_name %}
+{{ profile.user.first_name }} {{ profile.user.last_name }}
+{% else %}
+{{ profile.user.username }}
+{% endif %}
+</h1>
+<form action="{% url 'confirm_abilities' profile.user.username %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Enregistrer</button>
+</form>
+<a href="javascript:history.back()">Retour</a>

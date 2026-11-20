@@ -12,4 +12,9 @@ class ScheduleForm(forms.Form):
     date = forms.DateField(label="Date")
 
 class UserAbilitiesForm(forms.Form):
-    abilities = forms.MultipleChoiceField(label="Compétences", choices=Ability.objects.all())
+    abilities = forms.ModelMultipleChoiceField(
+        label="Compétences maîtrisées",
+        queryset=Ability.objects.all(),
+        required=False,
+        widget=forms.CheckboxSelectMultiple
+    )

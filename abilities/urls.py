@@ -8,6 +8,10 @@ urlpatterns = [
 
     # ex: /abilities/user/audouardr/
     path('user/<str:username>/', views.profile_view, name='profile_view'),
+    # ex: /abilities/user/audouardr/select-abilities
+    path('user/<str:username>/select-abilities', views.select_abilities, name='select_abilities'),
+    # ex: /abilities/user/audouardr/confirm-abilities
+    path('user/<str:username>/confirm-abilities', views.confirm_abilities, name='confirm_abilities'),
 
     # ex: /abilities/ability/2/
     path("ability/<int:ability_id>/", views.show_ability, name="show_ability"),

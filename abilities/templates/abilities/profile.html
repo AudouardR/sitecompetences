@@ -32,6 +32,7 @@
     {% else %}
         <p>Aucune compétence</p>
     {% endif %}
+    <a href="{% url 'select_abilities' user.username %}">Choisir ses compétences</a>
 
     <a href="javascript:history.back()">Retour</a>
 {% endblock %}

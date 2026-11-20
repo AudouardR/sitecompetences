@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.http import require_GET, require_POST
 
-from .forms import AbilityForm, ScheduleForm
+from .forms import AbilityForm, ScheduleForm, UserAbilitiesForm
 from .models import Schedule, Ability, Profile
 
 
@@ -21,6 +21,35 @@ def profile_view(request, username):
     profile = Profile.objects.get(user__username=username)
     return render(request, 'abilities/profile.html', {'profile': profile})
 
+@require_GET
+def select_abilities(request, username):
+    profile = Profile.objects.get(user__username=username)
+
+    if request.user.is_authenticated and (request.user.is_superuser or request.user.username == username):
+        form = UserAbilitiesForm()
+        return render(request, "abilities/user_abilities.html", {"form": form, 'profile': profile})
+    else:
+        return HttpResponseRedirect(reverse("index"))
+
+@require_POST
+def confirm_abilities(request, username):
+    profile = Profile.objects.get(user__username=username)
+
+    if request.user.is_authenticated and request.user.is_superuser:
+
+        if request.method == "POST":
+            form = UserAbilitiesForm(request.POST)
+            if form.is_valid():
+                profile.abilities.set(form.cleaned_data["abilities"])
+                profile.save()
+                return HttpResponseRedirect(reverse("index"))
+        else:
+            form = ScheduleForm(initial={"abilities": profile.abilities})
+
+        return render(request, "abilities/user_abilities.html", {"form": form, 'profile': profile})
+    else:
+        return HttpResponseRedirect(reverse("index"))
+
 # Compétences
 
 @require_GET
@@ -30,7 +59,7 @@ def show_ability(request, ability_id):
 
 @require_GET
 def create_ability(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.is_superuser:
         form = AbilityForm()
         return render(request, "abilities/ability/create.html", {"form": form})
     else:
@@ -38,7 +67,7 @@ def create_ability(request):
 
 @require_POST
 def save_ability(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.is_superuser:
         if request.method == "POST":
             form = AbilityForm(request.POST)
             if form.is_valid():
@@ -54,7 +83,7 @@ def save_ability(request):
 
 @require_GET
 def edit_ability(request, ability_id):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.is_superuser:
         ability = get_object_or_404(Ability, pk=ability_id)
         form = AbilityForm(initial={"label": ability.label, "activity": ability.activity})
         return render(request, "abilities/ability/edit.html", {"form": form, "ability": ability})
