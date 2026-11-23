@@ -1,4 +1,13 @@
-<h1>{{ ability.label }}</h1>
+{% extends "base.html" %}
+
+{% block title %}Échanges de compétences - Compétence : {{ ability.label }}{% endblock %}
+
+{% block header %}
+    <h1>{{ ability.label }}</h1>
+{% endblock %}
+
+{% block main %}
+
 <p>Activité : {{ ability.activity }}</p>
 {% if user.is_authenticated %}
     {% if user.is_superuser %}
@@ -13,3 +22,5 @@
     {% endif %}
 {% endif %}
 <a href="javascript:history.back()">Retour</a>
+
+{% endblock %}
