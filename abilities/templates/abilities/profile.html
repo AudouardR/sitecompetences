@@ -1,20 +1,11 @@
 {% extends "base.html" %}
 
 {% block title %}
-Échanges de compétences - Profil :
-{% if profile.user.last_name and profile.user.first_name %}
-{{ profile.user.first_name }} {{ profile.user.last_name }}
-{% else %}
-{{ profile.user.username }}
-{% endif %}
+Échanges de compétences - Profil : {{ profile }}
 {% endblock %}
 
 {% block header %}
-    {% if profile.user.last_name and profile.user.first_name %}
-        <h1>Profil : {{ profile.user.first_name }} {{ profile.user.last_name }}</h1>
-    {% else %}
-        <h1>Profil : {{ profile.user.username }}</h1>
-    {% endif %}
+    <h1>{{ profile }}</h1>
 {% endblock %}
 
 {% block main %}
