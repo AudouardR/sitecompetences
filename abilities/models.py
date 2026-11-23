@@ -19,7 +19,10 @@ class Schedule(models.Model):
     date = models.DateField()
 
     def __str__(self):
-        return str(self.date) + " : " + str(self.ability.activity) + ", proposé par " + str(self.client)
+        return (str(self.date) + " : " +
+                str(self.ability.activity) +
+                ", proposé par " +
+                ((self.client.first_name + " " + self.client.last_name) if (self.client.first_name and self.client.last_name) else self.client.username))
 
     def is_in_the_past(self):
         return self.date < timezone.localdate()
@@ -30,4 +33,6 @@ class Profile(models.Model):
     REQUIRED_FIELDS = ['email']
 
     def __str__(self):
-        return self.user.username
+        return (self.user.first_name + " " + self.user.last_name) \
+            if (self.user.first_name and self.user.last_name) \
+            else self.user.username
