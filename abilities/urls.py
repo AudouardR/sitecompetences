@@ -10,6 +10,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),
 
+    path("signup/", views.SignUpView.as_view(), name="signup"),
+
     # ex: /abilities/accounts/audouardr/
     path('accounts/<str:username>/', views.profile_view, name='profile_view'),
     # ex: /abilities/accounts/audouardr/select-abilities
@@ -42,4 +44,6 @@ urlpatterns = [
     path("schedule/<int:schedule_id>/update/", views.update_schedule, name="update_schedule"),
     # ex: /abilities/schedule/2/delete/
     path("schedule/<int:schedule_id>/delete/", views.delete_schedule, name="delete_schedule"),
+    # ex: /abilities/schedule/2/apply/
+    path("schedule/<int:schedule_id>/apply/", views.apply_for_schedule, name="apply_for_schedule"),
 ]
