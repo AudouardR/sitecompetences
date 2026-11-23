@@ -247,3 +247,14 @@ def accept_application(request, schedule_id):
             schedule.save()
 
     return HttpResponseRedirect(reverse("index"))
+
+@require_POST
+def refuse_application(request, schedule_id):
+    schedule = get_object_or_404(Schedule, pk=schedule_id)
+
+    if request.user.is_authenticated and (schedule.client == request.user) and schedule.applicant:
+        if request.method == "POST":
+            schedule.applicant = None
+            schedule.save()
+
+    return HttpResponseRedirect(reverse("index"))

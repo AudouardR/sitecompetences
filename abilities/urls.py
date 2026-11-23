@@ -46,4 +46,8 @@ urlpatterns = [
     path("schedule/<int:schedule_id>/delete/", views.delete_schedule, name="delete_schedule"),
     # ex: /abilities/schedule/2/apply/
     path("schedule/<int:schedule_id>/apply/", views.apply_for_schedule, name="apply_for_schedule"),
+    # ex: /abilities/schedule/2/accept/
+    path("schedule/<int:schedule_id>/accept/", views.accept_application, name="accept_application"),
+    # ex: /abilities/schedule/2/refuse/
+    path("schedule/<int:schedule_id>/refuse/", views.refuse_application, name="refuse_application"),
 ]
