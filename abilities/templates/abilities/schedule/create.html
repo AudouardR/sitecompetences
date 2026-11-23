@@ -2,17 +2,14 @@
 
 {% block title %}Échanges de compétences - Proposer un créneau{% endblock %}
 
-{% block header %}
-    <h1>Proposer un créneau</h1>
-{% endblock %}
-
 {% block main %}
+<h1 class="mt-5">Proposer un créneau</h1>
 
 <form action="{% url 'save_schedule' %}" method="post">
     {% csrf_token %}
     {{ form }}
-    <button type="submit">Proposer</button>
+    <button class="btn btn-primary m-1" type="submit">Proposer</button>
 </form>
-<a href="javascript:history.back()">Retour</a>
+<a class="btn btn-secondary m-1" href="javascript:history.back()">Retour</a>
 
 {% endblock %}

@@ -4,11 +4,8 @@
 Échanges de compétences - Profil : {{ profile }}
 {% endblock %}
 
-{% block header %}
-    <h1>{{ profile }}</h1>
-{% endblock %}
-
 {% block main %}
+    <h1 class="mt-5">{{ profile }}</h1>
     {% if profile.user.last_name and profile.user.first_name %}
         <p>Nom d'utilisateur : {{ profile.user.username }}</p>
     {% endif %}

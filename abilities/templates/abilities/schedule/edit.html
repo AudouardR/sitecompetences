@@ -2,17 +2,14 @@
 
 {% block title %}Échanges de compétences - Modifier un créneau{% endblock %}
 
-{% block header %}
-    <h1>Modifier un créneau</h1>
-{% endblock %}
-
 {% block main %}
+<h1 class="mt-5">Modifier un créneau</h1>
 
 <form action="{% url 'update_schedule' schedule.id %}" method="post">
     {% csrf_token %}
     {{ form }}
-    <button type="submit">Enregistrer</button>
+    <button class="btn btn-primary m-1" type="submit">Enregistrer</button>
 </form>
-<a href="javascript:history.back()">Retour</a>
+<a class="btn btn-secondary m-1" href="javascript:history.back()">Retour</a>
 
 {% endblock %}

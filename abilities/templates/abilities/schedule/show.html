@@ -2,11 +2,8 @@
 
 {% block title %}Échanges de compétences - Créneau n°{{ schedule.id }}{% endblock %}
 
-{% block header %}
-    <h1>Créneau n°{{ schedule.id }}</h1>
-{% endblock %}
-
 {% block main %}
+<h1 class="mt-5">Créneau n°{{ schedule.id }}</h1>
 
 <ul>
     <li>
@@ -42,7 +39,11 @@
                     {% if schedule.applicant and schedule.accepted == 0 %}
                         <form action="{% url 'accept_application' schedule.id %}" method="post">
                             {% csrf_token %}
-                            <button type="submit">Accepter la demande</button>
+                            <button class="btn btn-success m-1" type="submit">Accepter la demande</button>
+                        </form>
+                        <form action="{% url 'refuse_application' schedule.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-danger m-1" type="submit">Refuser la demande</button>
                         </form>
                     {% endif %}
                 {% endif %}
@@ -60,22 +61,22 @@
 </ul>
 {% if user.is_authenticated %}
     {% if user.is_superuser or user == schedule.client %}
-        <a href="{% url 'edit_schedule' schedule.id %}">Modifier</a>
+        <a class="btn btn-secondary" href="{% url 'edit_schedule' schedule.id %}">Modifier</a>
         <form action="{% url 'delete_schedule' schedule.id %}"
               onsubmit="return confirm('Voulez-vous vraiment supprimer ce créneau ?')"
               method="post"
         >
             {% csrf_token %}
-            <button type="submit">Supprimer</button>
+            <button class="btn btn-danger m-1" type="submit">Supprimer</button>
         </form>
     {% endif %}
     {% if schedule.ability in profile.abilities and not schedule.applicant %}
         <form action="{% url 'apply_for_schedule' schedule.id %}" method="post">
             {% csrf_token %}
-            <button type="submit">Candidater pour l'offre</button>
+            <button class="btn btn-primary m-1" type="submit">Candidater pour l'offre</button>
         </form>
     {% endif %}
 {% endif %}
-<a href="javascript:history.back()">Retour</a>
+<a class="btn btn-secondary m-1" href="javascript:history.back()">Retour</a>
 
 {% endblock %}
