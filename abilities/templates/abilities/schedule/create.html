@@ -1,7 +1,18 @@
-<h1>Proposer un créneau</h1>
+{% extends "base.html" %}
+
+{% block title %}Échanges de compétences - Proposer un créneau{% endblock %}
+
+{% block header %}
+    <h1>Proposer un créneau</h1>
+{% endblock %}
+
+{% block main %}
+
 <form action="{% url 'save_schedule' %}" method="post">
     {% csrf_token %}
     {{ form }}
     <button type="submit">Proposer</button>
 </form>
 <a href="javascript:history.back()">Retour</a>
+
+{% endblock %}
