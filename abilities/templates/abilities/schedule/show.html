@@ -1,11 +1,25 @@
-<h1>Créneau n°{{ schedule.id }}</h1>
+{% extends "base.html" %}
+
+{% block title %}Échanges de compétences - Créneau n°{{ schedule.id }}{% endblock %}
+
+{% block header %}
+    <h1>Créneau n°{{ schedule.id }}</h1>
+{% endblock %}
+
+{% block main %}
+
 <ul>
     <li>
         Date : {{ schedule.date }}
     </li>
     {% if user.is_authenticated %}
         <li>
-            Demandeur : {{ schedule.client }}
+            Demandeur :
+            {% if schedule.client.last_name and schedule.client.first_name %}
+                {{ schedule.client.first_name }} {{ schedule.client.last_name }}
+            {% else %}
+                {{ schedule.client.username }}
+            {% endif %}
         </li>
 
         <li>
@@ -13,16 +27,35 @@
         </li>
 
         <li>
-            Candidat : {% if schedule.applicant %}{{ schedule.applicant }}{% else %}Aucun{% endif %}
+            Candidat :
+            {% if schedule.applicant %}
+                {% if schedule.applicant.last_name and schedule.applicant.first_name %}
+                    {{ schedule.applicant.first_name }} {{ schedule.applicant.last_name }}
+                {% else %}
+                    {{ schedule.applicant.username }}
+                {% endif %}
+            {% else %}
+                Aucun
+            {% endif %}
+            {% if user.is_authenticated %}
+                {% if user.is_superuser or user == schedule.client %}
+                    {% if schedule.applicant and schedule.accepted == 0 %}
+                        <form action="{% url 'accept_application' schedule.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">Accepter la demande</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
         </li>
     {% endif %}
-
-    <li>
-        Créneau accepté : {% if schedule.accepted >= 1 %}Oui{% else %}Non{% endif %}
-    </li>
     <li>
         Activité : {{ schedule.ability.activity }}
         (<a href="{% url 'show_ability' schedule.ability.id %}">{{ schedule.ability.label }}</a>)
+    </li>
+
+    <li>
+        Créneau accepté : {% if schedule.accepted >= 1 %}Oui{% else %}Non{% endif %}
     </li>
 </ul>
 {% if user.is_authenticated %}
@@ -36,5 +69,13 @@
             <button type="submit">Supprimer</button>
         </form>
     {% endif %}
+    {% if schedule.ability in profile.abilities and not schedule.applicant %}
+        <form action="{% url 'apply_for_schedule' schedule.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Candidater pour l'offre</button>
+        </form>
+    {% endif %}
 {% endif %}
 <a href="javascript:history.back()">Retour</a>
+
+{% endblock %}
