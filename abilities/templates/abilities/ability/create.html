@@ -1,7 +1,18 @@
-<h1>Ajouter une compétence</h1>
+{% extends "base.html" %}
+
+{% block title %}Échanges de compétences - Ajouter une compétence{% endblock %}
+
+{% block header %}
+    <h1>Ajouter une compétence</h1>
+{% endblock %}
+
+{% block main %}
+
 <form action="{% url 'save_ability' %}" method="post">
     {% csrf_token %}
     {{ form }}
     <button type="submit">Créer</button>
 </form>
 <a href="javascript:history.back()">Retour</a>
+
+{% endblock %}
