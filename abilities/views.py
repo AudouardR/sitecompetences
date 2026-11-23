@@ -1,12 +1,19 @@
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.decorators.http import require_GET, require_POST
+from django.views.generic import CreateView
 
 from .forms import AbilityForm, ScheduleForm, UserAbilitiesForm
 from .models import Schedule, Ability, Profile
 
+class SignUpView(CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy("login")
+    template_name = "abilities/registration/signup.html"
 
 @require_GET
 def index(request):
@@ -20,9 +27,10 @@ def index(request):
         user_ability_list = profile.abilities.all()
         context["user_ability_list"] = user_ability_list
 
-        proposed_schedule_list = Schedule.objects.filter(accepted=False,
+        proposed_schedule_list = (Schedule.objects.filter(accepted=False,
                                                          ability__in=user_ability_list,
-                                                         date__gte=timezone.now()).order_by("date")
+                                                         date__gte=timezone.now())
+                                  .exclude(client=profile.user).order_by("date"))
         context["proposed_schedule_list"] = proposed_schedule_list
 
         user_schedule_list = Schedule.objects.filter(client__username=request.user.username)
@@ -149,7 +157,8 @@ def delete_ability(request, ability_id):
 @require_GET
 def show_schedule(request, schedule_id):
     schedule = get_object_or_404(Schedule, pk=schedule_id)
-    return render(request, "abilities/schedule/show.html", {"schedule": schedule})
+    profile = Profile.objects.get(user__username=request.user.username)
+    return render(request, "abilities/schedule/show.html", {"schedule": schedule, "profile": profile})
 
 @require_GET
 def create_schedule(request):
@@ -213,5 +222,28 @@ def delete_schedule(request, schedule_id):
 
         if request.method == "POST":
             schedule.delete()
+
+    return HttpResponseRedirect(reverse("index"))
+
+@require_POST
+def apply_for_schedule(request, schedule_id):
+    schedule = get_object_or_404(Schedule, pk=schedule_id)
+
+    if request.user.is_authenticated:
+        profile = Profile.objects.get(user=request.user)
+        if request.method == "POST" and schedule.ability in profile.abilities:
+            schedule.applicant = request.user
+            schedule.save()
+
+    return HttpResponseRedirect(reverse("index"))
+
+@require_POST
+def accept_application(request, schedule_id):
+    schedule = get_object_or_404(Schedule, pk=schedule_id)
+
+    if request.user.is_authenticated and (schedule.client == request.user) and schedule.applicant:
+        if request.method == "POST":
+            schedule.accepted = True
+            schedule.save()
 
     return HttpResponseRedirect(reverse("index"))
