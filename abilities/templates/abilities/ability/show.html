@@ -8,16 +8,18 @@
 <p>Activité : {{ ability.activity }}</p>
 {% if user.is_authenticated %}
     {% if user.is_superuser %}
-        <a href="{% url 'edit_ability' ability.id %}">Modifier</a>
-        <form action="{% url 'delete_ability' ability.id %}"
-              onsubmit="return confirm('Voulez-vous vraiment supprimer cette compétence ?')"
-              method="post"
-        >
-            {% csrf_token %}
-            <button class="btn btn-primary m-1" type="submit">Supprimer</button>
-        </form>
+        <div class="mb-3">
+            <a class="btn btn-warning m-1" href="{% url 'edit_ability' ability.id %}">Modifier</a>
+            <form class="d-inline" action="{% url 'delete_ability' ability.id %}"
+                  onsubmit="return confirm('Voulez-vous vraiment supprimer cette compétence ?')"
+                  method="post"
+            >
+                {% csrf_token %}
+                <button class="btn btn-danger m-1" type="submit">Supprimer</button>
+            </form>
+        </div>
     {% endif %}
 {% endif %}
-<a class="btn btn-secondary m-1" href="javascript:history.back()">Retour</a>
+<a class="nav-link" href="{% url 'index' %}">< Retour à la page d'accueil</a>
 
 {% endblock %}
