@@ -5,13 +5,13 @@
 {% block main %}
 <h1 class="mt-5">Créneau n°{{ schedule.id }}</h1>
 
-<ul>
+<ul class="my-4">
     <li>
-        Date : {{ schedule.date }}
+        <strong>Date :</strong> {{ schedule.date }}
     </li>
     {% if user.is_authenticated %}
         <li>
-            Demandeur :
+            <strong>Demandeur :</strong>
             {% if schedule.client.last_name and schedule.client.first_name %}
                 {{ schedule.client.first_name }} {{ schedule.client.last_name }}
             {% else %}
@@ -20,11 +20,11 @@
         </li>
 
         <li>
-            Adresse courriel du demandeur : {{ schedule.client.email }}
+            <strong>Adresse courriel du demandeur :</strong> {{ schedule.client.email }}
         </li>
 
         <li>
-            Candidat :
+            <strong>Candidat :</strong>
             {% if schedule.applicant %}
                 {% if schedule.applicant.last_name and schedule.applicant.first_name %}
                     {{ schedule.applicant.first_name }} {{ schedule.applicant.last_name }}
@@ -34,49 +34,58 @@
             {% else %}
                 Aucun
             {% endif %}
-            {% if user.is_authenticated %}
-                {% if user.is_superuser or user == schedule.client %}
-                    {% if schedule.applicant and schedule.accepted == 0 %}
-                        <form action="{% url 'accept_application' schedule.id %}" method="post">
-                            {% csrf_token %}
-                            <button class="btn btn-success m-1" type="submit">Accepter la demande</button>
-                        </form>
-                        <form action="{% url 'refuse_application' schedule.id %}" method="post">
-                            {% csrf_token %}
-                            <button class="btn btn-danger m-1" type="submit">Refuser la demande</button>
-                        </form>
-                    {% endif %}
-                {% endif %}
-            {% endif %}
+
         </li>
     {% endif %}
     <li>
-        Activité : {{ schedule.ability.activity }}
+        <strong>Activité :</strong> {{ schedule.ability.activity }}
         (<a href="{% url 'show_ability' schedule.ability.id %}">{{ schedule.ability.label }}</a>)
     </li>
 
     <li>
-        Créneau accepté : {% if schedule.accepted >= 1 %}Oui{% else %}Non{% endif %}
+        <strong>Créneau accepté :</strong> {% if schedule.accepted >= 1 %}Oui{% else %}Non{% endif %}
     </li>
 </ul>
+<div>
 {% if user.is_authenticated %}
     {% if user.is_superuser or user == schedule.client %}
-        <a class="btn btn-secondary" href="{% url 'edit_schedule' schedule.id %}">Modifier</a>
-        <form action="{% url 'delete_schedule' schedule.id %}"
-              onsubmit="return confirm('Voulez-vous vraiment supprimer ce créneau ?')"
-              method="post"
-        >
-            {% csrf_token %}
-            <button class="btn btn-danger m-1" type="submit">Supprimer</button>
-        </form>
+        {% if schedule.applicant and schedule.accepted == 0 %}
+            <div class="mb-3">
+                <form class="d-inline" action="{% url 'accept_application' schedule.id %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-success m-1" type="submit">Accepter la demande</button>
+                </form>
+                <form class="d-inline" action="{% url 'refuse_application' schedule.id %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-danger m-1" type="submit">Refuser la demande</button>
+                </form>
+            </div>
+        {% endif %}
     {% endif %}
-    {% if schedule.ability in profile.abilities and not schedule.applicant %}
-        <form action="{% url 'apply_for_schedule' schedule.id %}" method="post">
-            {% csrf_token %}
-            <button class="btn btn-primary m-1" type="submit">Candidater pour l'offre</button>
-        </form>
+    {% if schedule.ability in profile.abilities.all %}
+        {% if not schedule.applicant %}
+            <div class="mb-3">
+                <form action="{% url 'apply_for_schedule' schedule.id %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-primary m-1" type="submit">Candidater pour l'offre</button>
+                </form>
+            </div>
+        {% endif %}
+    {% endif %}
+    {% if user.is_superuser or user == schedule.client %}
+        <div class="mb-3">
+            <a class="btn btn-warning m-1" href="{% url 'edit_schedule' schedule.id %}">Modifier</a>
+            <form class="d-inline" action="{% url 'delete_schedule' schedule.id %}"
+                  onsubmit="return confirm('Voulez-vous vraiment supprimer ce créneau ?')"
+                  method="post"
+            >
+                {% csrf_token %}
+                <button class="btn btn-danger m-1" type="submit">Supprimer</button>
+            </form>
+        </div>
     {% endif %}
 {% endif %}
-<a class="btn btn-secondary m-1" href="javascript:history.back()">Retour</a>
+</div>
+<a class="nav-link" href="{% url 'index' %}">< Retour à la page d'accueil</a>
 
 {% endblock %}
