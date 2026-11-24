@@ -1,6 +1,6 @@
 # Evaluation Django
 
-Il s'agit d'une application d'échange de compétences. Après s'être connecté au site, un utilisateur peut renseigner ses compétences, déposer une demande d'une compétence qu'il ne maîtrise pas pour une date donnée, attendre qu'un utilisateur possédant cette compétence propose son aide et accepter ou refuser cette demande.
+Il s'agit d'une application d'échange de compétences. Après s'être connecté au site, un utilisateur peut renseigner ses compétences, déposer une demande d'une compétence qu'il ne maîtrise pas pour une date donnée, attendre qu'un utilisateur possédant cette compétence propose son aide et accepter ou refuser cette candidature.
 
 ## Lancer l'application
 
