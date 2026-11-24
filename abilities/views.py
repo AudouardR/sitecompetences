@@ -1,3 +1,5 @@
+from asyncio.windows_events import NULL
+
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404, HttpResponseRedirect
@@ -70,7 +72,7 @@ def confirm_abilities(request, username):
             if form.is_valid():
                 profile.abilities.set(form.cleaned_data["abilities"])
                 profile.save()
-                return HttpResponseRedirect(reverse("index"))
+                return HttpResponseRedirect(reverse("profile_view", kwargs={"username":username}))
         else:
             form = ScheduleForm(initial={"abilities": profile.abilities})
 
@@ -134,7 +136,7 @@ def update_ability(request, ability_id):
                 ability.label = form.cleaned_data["label"]
                 ability.activity = form.cleaned_data["activity"]
                 ability.save()
-                return HttpResponseRedirect(reverse("index"))
+                return HttpResponseRedirect(reverse("show_ability", kwargs={"ability_id":ability_id}))
         else:
             form = ScheduleForm(initial={"label": ability.label, "activity": ability.activity})
 
@@ -157,8 +159,11 @@ def delete_ability(request, ability_id):
 @require_GET
 def show_schedule(request, schedule_id):
     schedule = get_object_or_404(Schedule, pk=schedule_id)
-    profile = Profile.objects.get(user__username=request.user.username)
-    return render(request, "abilities/schedule/show.html", {"schedule": schedule, "profile": profile})
+    context = {"schedule": schedule}
+    if request.user.is_authenticated:
+        profile = Profile.objects.get(user__username=request.user.username)
+        context["profile"] = profile
+    return render(request, "abilities/schedule/show.html", context)
 
 @require_GET
 def create_schedule(request):
@@ -207,7 +212,7 @@ def update_schedule(request, schedule_id):
                 schedule.ability=form.cleaned_data["ability"]
                 schedule.date=form.cleaned_data["date"]
                 schedule.save()
-                return HttpResponseRedirect(reverse("index"))
+                return HttpResponseRedirect(reverse("show_schedule", kwargs={"schedule_id":schedule_id}))
         else:
             form = ScheduleForm(initial={"ability": schedule.ability, "date": schedule.date})
 
@@ -231,30 +236,30 @@ def apply_for_schedule(request, schedule_id):
 
     if request.user.is_authenticated:
         profile = Profile.objects.get(user=request.user)
-        if request.method == "POST" and schedule.ability in profile.abilities:
+        if request.method == "POST" and (schedule.ability in profile.abilities.all()):
             schedule.applicant = request.user
             schedule.save()
 
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("show_schedule", kwargs={"schedule_id":schedule_id}))
 
 @require_POST
 def accept_application(request, schedule_id):
     schedule = get_object_or_404(Schedule, pk=schedule_id)
 
-    if request.user.is_authenticated and (schedule.client == request.user) and schedule.applicant:
+    if request.user.is_authenticated and ((schedule.client == request.user) or request.user.is_superuser) and schedule.applicant:
         if request.method == "POST":
             schedule.accepted = True
             schedule.save()
 
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("show_schedule", kwargs={"schedule_id":schedule_id}))
 
 @require_POST
 def refuse_application(request, schedule_id):
     schedule = get_object_or_404(Schedule, pk=schedule_id)
 
-    if request.user.is_authenticated and (schedule.client == request.user) and schedule.applicant:
+    if request.user.is_authenticated and ((schedule.client == request.user) or request.user.is_superuser) and schedule.applicant:
         if request.method == "POST":
             schedule.applicant = None
             schedule.save()
 
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("show_schedule", kwargs={"schedule_id":schedule_id}))
