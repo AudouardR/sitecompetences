@@ -1,0 +1,149 @@
+<mxfile host="app.diagrams.net" rtKey="52f51a40.BNeRyzgvH3nHZYgXetC_fCiDUtTVwzgB">
+  <diagram name="Page-1" id="aX_L7PH-amxlH8z0cnzM">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="oD_L5ypzvFOMdV-id_63-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="310" width="790" x="460" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-2" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};participant=umlActor;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;Demandeur" vertex="1">
+          <mxGeometry height="580" width="20" x="1050" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-3" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};" value="Créneau" vertex="1">
+          <mxGeometry height="570" width="100" x="710" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-5" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;rounded=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="460" y="707.0000000000002" as="sourcePoint" />
+            <mxPoint x="1250" y="707.0000000000002" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-6" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" target="oD_L5ypzvFOMdV-id_63-3" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="460" y="520" as="sourcePoint" />
+            <mxPoint x="580" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-7" connectable="0" parent="oD_L5ypzvFOMdV-id_63-6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Candidater pour l&#39;offre" vertex="1">
+          <mxGeometry relative="1" x="-0.212" y="-1" as="geometry">
+            <mxPoint x="22" y="-21" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-8" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="760" y="590" as="sourcePoint" />
+            <mxPoint x="1060" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-9" connectable="0" parent="oD_L5ypzvFOMdV-id_63-8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Envoi de la candidature au demandeur" vertex="1">
+          <mxGeometry relative="1" x="-0.212" y="-1" as="geometry">
+            <mxPoint x="22" y="-21" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-10" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=12;" value="Réponse du demandeur à la candidature" vertex="1">
+          <mxGeometry height="30" width="225" x="475" y="664" as="geometry" />
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-11" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;innerLoopWaypoints=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="780" y="760" />
+              <mxPoint x="780" y="780" />
+            </Array>
+            <mxPoint x="760" y="760" as="sourcePoint" />
+            <mxPoint x="760" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-12" connectable="0" parent="oD_L5ypzvFOMdV-id_63-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="accept_application -&amp;gt; applicant.accepted = true" vertex="1">
+          <mxGeometry relative="1" x="0.0667" as="geometry">
+            <mxPoint x="120" y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-16" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="440" y="810" as="sourcePoint" />
+            <mxPoint x="1250" y="810" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-21" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;endFill=0;startArrow=open;startFill=0;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="460" y="960" as="sourcePoint" />
+            <mxPoint x="760" y="960" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-22" connectable="0" parent="oD_L5ypzvFOMdV-id_63-21" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Envoi de la réponse au candidat" vertex="1">
+          <mxGeometry relative="1" x="-0.212" y="-1" as="geometry">
+            <mxPoint x="29" y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-36" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;" value="Diagramme de séquence pour la candidature à une demande" vertex="1">
+          <mxGeometry height="30" width="480" x="605" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-37" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="alternatif" vertex="1">
+          <mxGeometry height="30" width="90" x="460" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-38" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};participant=umlActor;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;Candidat" vertex="1">
+          <mxGeometry height="580" width="20" x="450" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-41" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;innerLoopWaypoints=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="780" y="530" />
+              <mxPoint x="780" y="550" />
+            </Array>
+            <mxPoint x="760" y="530" as="sourcePoint" />
+            <mxPoint x="760" y="550" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-42" connectable="0" parent="oD_L5ypzvFOMdV-id_63-41" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="apply_for_schedule() -&amp;gt; applicant = Candidat" vertex="1">
+          <mxGeometry relative="1" x="0.0667" as="geometry">
+            <mxPoint x="120" y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-43" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;endFill=0;startArrow=open;startFill=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="760" y="740" as="sourcePoint" />
+            <mxPoint x="1060" y="740" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-44" connectable="0" parent="oD_L5ypzvFOMdV-id_63-43" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Accepter la candidature" vertex="1">
+          <mxGeometry relative="1" x="-0.212" y="-1" as="geometry">
+            <mxPoint x="29" y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-45" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=12;" value="Candidature acceptée" vertex="1">
+          <mxGeometry height="30" width="140" x="470" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-46" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=12;" value="Candidature refusée" vertex="1">
+          <mxGeometry height="30" width="140" x="470" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-47" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;innerLoopWaypoints=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="780" y="860" />
+              <mxPoint x="780" y="880" />
+            </Array>
+            <mxPoint x="760" y="860" as="sourcePoint" />
+            <mxPoint x="760" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-48" connectable="0" parent="oD_L5ypzvFOMdV-id_63-47" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="refuse_application -&amp;gt; applicant = none" vertex="1">
+          <mxGeometry relative="1" x="0.0667" as="geometry">
+            <mxPoint x="100" y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-49" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;endFill=0;startArrow=open;startFill=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="760" y="840" as="sourcePoint" />
+            <mxPoint x="1060" y="840" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oD_L5ypzvFOMdV-id_63-50" connectable="0" parent="oD_L5ypzvFOMdV-id_63-49" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Refuser la candidature" vertex="1">
+          <mxGeometry relative="1" x="-0.212" y="-1" as="geometry">
+            <mxPoint x="29" y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
